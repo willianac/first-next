@@ -1,0 +1,12 @@
+{
+  "posts" : [
+    {
+      "id" : "0",
+      "name" : "the beauty of lauren"
+    },
+    {
+      "id": "1",
+      "name" : "the charisma of ana ruggi"
+    }
+  ]
+}
