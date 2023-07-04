@@ -2,7 +2,7 @@ import Link from "next/link"
 
 export default function Navbar() {
   return (
-    <header className="h-16 shadow-md flex justify-between items-center px-12">
+    <header className="h-16 shadow-md flex justify-between items-center px-12 bg-black">
       <div>
         <h1 className="text-white font-semibold text-lg">My Blog</h1>
       </div>

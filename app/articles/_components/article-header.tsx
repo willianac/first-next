@@ -1,11 +1,11 @@
 export default function ArticleHeader() {
   return (
     <div className="flex flex-col">
-      <div>
-        <img className="max-w-2xl" src="https://images.unsplash.com/photo-1603302576837-37561b2e2302?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGxhcHRvcHxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80" alt="a laptop" />
+      <div className="max-w-2xl rounded-lg">
+        <img src="https://images.unsplash.com/photo-1603302576837-37561b2e2302?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGxhcHRvcHxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80" alt="a laptop" />
       </div>
       <div className="mt-7">
-        <h1 className="text-zinc-100 font-bold text-5xl">Um guia prático de como fazer manutenção no seu Notebook.</h1>
+        <h1 className="text-zinc-100 font-bold text-5xl antialiased">Um guia prático de como fazer manutenção no seu Notebook.</h1>
       </div>
       <div className="flex gap-32 mt-2.5 items-center">
         <p className="text-white font-semibold text-2xl">Wallace Coelho</p>
