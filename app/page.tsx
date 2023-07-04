@@ -1,7 +1,7 @@
 export default function Home() {
   return (
-    <>
-      <h1>This is the homepage</h1>
-    </>
+    <header className="max-w-3xl mx-auto mt-16">
+      <h1 className="font-extrabold text-center text-9xl text-zinc-100 tracking-tight">This is my Blogsite</h1>
+    </header>
   )
 }
