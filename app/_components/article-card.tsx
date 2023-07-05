@@ -1,21 +1,21 @@
-import Link from "next/link";
+type ArticleCardProps = {
+  title: string
+  author: string
+  imgSrc: string
+}
 
-export function ArticleCard() {
+export function ArticleCard({ title, author, imgSrc }: ArticleCardProps) {
   return (
     <div className="max-w-md border-t border-b border-zinc-600 border-opacity-50">
       <div className="flex justify-between items-center">
         <div className="p-4">
-          <Link href="articles/1">
-            <h2 className="text-white font-bold text-lg">Um guia prático de como fazer manutenção no seu Notebook.</h2>
-          </Link>
+          <h2 className="text-white font-bold text-lg">{title}</h2>
           <span className="text-white text-xs">
-            Por <span className="text-white underline underline-offset-2">Wallace Coelho</span>
+            Por <span className="text-white underline underline-offset-2">{author}</span>
           </span>
         </div>
         <div>
-        <Link href="articles/1">
-          <img className="max-w-[180px]" src="https://images.unsplash.com/photo-1603302576837-37561b2e2302?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGxhcHRvcHxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80" alt="" />
-        </Link>
+          <img className="max-w-[180px]" src={imgSrc} alt="" />
         </div>
       </div>
     </div>
