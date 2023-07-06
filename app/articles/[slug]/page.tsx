@@ -1,16 +1,32 @@
 import { Metadata, ResolvingMetadata } from "next";
 import { ArticleHeader } from "../_components/article-header";
 import { ArticleBody } from "../_components/article-body";
-import data from "../../../articles.json";
+import { cmsService } from "../../../infra/cms/cmsService";
+import { AllArticles } from "../../../infra/cms/Article";
 
 type PageProps = {
   params: { slug: string }
 }
 
-export default function Article({ params }: PageProps) {
-  const articles = data.articles
+export default async function Article({ params }: PageProps) {
   const id = params.slug
-  const currentArticle = articles.find(item => item.id === Number(id))
+
+  const articleByIdQuery = `
+    query {
+      allContentArticles(filter : {id : { eq: ${id}}}) {
+        title,
+        author,
+        headerImg {
+          url
+        },
+        content {
+          value
+        }
+      }
+    }
+  `
+  const { data } = await cmsService({ query: articleByIdQuery }) as AllArticles
+  const currentArticle = data.data.allContentArticles[0]
 
   return (
     <>
@@ -18,21 +34,21 @@ export default function Article({ params }: PageProps) {
         <ArticleHeader
           title={currentArticle.title} 
           author={currentArticle.author} 
-          imgSrc={currentArticle.imgSrc} 
+          imgSrc={currentArticle.headerImg.url} 
         />
       </section>
-      <ArticleBody articleID={id} />
+      <ArticleBody content={currentArticle.content} />    
     </>
   )
 }
 
-export async function generateMetadata(
-  { params }: PageProps, 
-  parent?: ResolvingMetadata
-): Promise<Metadata> {
-  const id = params.slug
-  const currentArticle = data.articles.find(item => item.id === Number(id))
-  return {
-    title : currentArticle.title
-  }
-}
+// export async function generateMetadata(
+//   { params }: PageProps, 
+//   parent?: ResolvingMetadata
+// ): Promise<Metadata> {
+//   const id = params.slug
+//   const currentArticle = data.articles.find(item => item.id === Number(id))
+//   return {
+//     title : currentArticle.title
+//   }
+// }

@@ -1,16 +1,14 @@
-import { readFile, readFileSync } from "node:fs"
+import { StructuredText } from "react-datocms";
 
-type ArticleTextProps = {
-  articleID: string
+type ArticleBodyProps = {
+  content: any
 }
 
-export function ArticleBody({ articleID }: ArticleTextProps) {
-  let text = readFileSync(`./texts/${articleID}.md`).toString("utf-8")
-  console.log("article body" + "o id: " + articleID)
+export function ArticleBody({ content }: ArticleBodyProps) {
   
   return (
     <article className="max-w-3xl mx-auto font-serif text-zinc-300 text-xl leading-normal mt-6 bg-zinc-900 p-11 rounded-lg shadow-2xl">
-      {text}
+      <StructuredText data={content}/>
     </article>
   )
 }
