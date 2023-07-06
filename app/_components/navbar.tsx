@@ -6,15 +6,15 @@ export default function Navbar() {
       <div>
         <h1 className="text-white font-semibold text-lg">My Blog</h1>
       </div>
-      <nav>
-        <ul className="flex gap-2 font-medium text-white">
-          <li>
+      <nav className="h-full">
+        <ul className="flex font-medium text-white h-full">
+          <li className="px-2 transition ease-linear hover:bg-indigo-700 flex items-center">
             <Link href="/">Home</Link>
           </li>
-          <li>
+          <li className="px-2 transition ease-linear hover:bg-indigo-700 flex items-center">
             <Link href="/articles" prefetch={false}>Artigos</Link>
           </li>
-          <li>
+          <li className="px-2 transition ease-linear hover:bg-indigo-700 flex items-center">
             <Link href="/profile">Perfil</Link>
           </li>
         </ul>
