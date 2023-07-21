@@ -1,8 +1,22 @@
+"use client"
 import Link from "next/link"
+import { useEffect } from "react"
 
 export default function Navbar() {
+  useEffect(() => {
+    let prevScrollPos = window.scrollY
+    window.onscroll = function() {
+      let currentScrollPos = window.scrollY
+      if (prevScrollPos > currentScrollPos) {
+        document.getElementById("navbar").style.top = "0";
+      } else {
+        document.getElementById("navbar").style.top = "-64px";
+      }
+      prevScrollPos = currentScrollPos;
+    }
+  })
   return (
-    <header className="h-16 shadow-md flex justify-between items-center px-12 bg-black">
+    <header className="fixed top-0 w-full h-16 shadow-md flex justify-between items-center px-12 bg-black transition-all duration-500" id="navbar">
       <div>
         <h1 className="text-white font-semibold text-lg">My Blog</h1>
       </div>

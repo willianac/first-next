@@ -30,7 +30,7 @@ export default async function Article({ params }: PageProps) {
 
   return (
     <>
-      <section className="max-w-3xl mx-auto mt-6">
+      <section className="max-w-3xl mx-auto mt-24">
         <ArticleHeader
           title={currentArticle.title} 
           author={currentArticle.author} 
@@ -42,13 +42,20 @@ export default async function Article({ params }: PageProps) {
   )
 }
 
-// export async function generateMetadata(
-//   { params }: PageProps, 
-//   parent?: ResolvingMetadata
-// ): Promise<Metadata> {
-//   const id = params.slug
-//   const currentArticle = data.articles.find(item => item.id === Number(id))
-//   return {
-//     title : currentArticle.title
-//   }
-// }
+export async function generateMetadata(
+  { params }: PageProps, 
+  parent?: ResolvingMetadata
+): Promise<Metadata> {
+  const id = params.slug
+  const currentArticleQuery = `
+    query {
+      allContentArticles(filter : {id : { eq: ${id}}}) {
+        title
+      }
+    }
+  `
+  const { data } = await cmsService({ query : currentArticleQuery })
+  return {
+    title : data.data.allContentArticles[0].title
+  }
+}

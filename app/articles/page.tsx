@@ -29,7 +29,7 @@ export default async function Articles() {
   const articles = data.data.allContentArticles
   return (
     <>
-      <main className="max-w-5xl mx-auto mt-6">
+      <main className="max-w-5xl mx-auto mt-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 place-items-center gap-y-8">
           {articles.map(item => (
             <Link href={`articles/${item.id}`} key={item.id} prefetch={false}>
