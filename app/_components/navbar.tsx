@@ -1,6 +1,7 @@
 "use client"
 import Link from "next/link"
 import { useEffect } from "react"
+import { SearchBar } from "./searchbar"
 
 export default function Navbar() {
   useEffect(() => {
@@ -17,8 +18,9 @@ export default function Navbar() {
   })
   return (
     <header className="fixed top-0 w-full h-16 shadow-md flex justify-between items-center px-12 bg-black transition-all duration-500" id="navbar">
-      <div>
+      <div className="flex items-center gap-x-48">
         <h1 className="text-white font-semibold text-lg">My Blog</h1>
+        <SearchBar />
       </div>
       <nav className="h-full">
         <ul className="flex font-medium text-white h-full">
