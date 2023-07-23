@@ -3,6 +3,7 @@ import { ArticleHeader } from "../_components/article-header";
 import { ArticleBody } from "../_components/article-body";
 import { cmsService } from "../../../infra/cms/cmsService";
 import { AllArticles } from "../../../infra/cms/Article";
+import Link from "next/link";
 
 type PageProps = {
   params: { slug: string }
@@ -30,6 +31,11 @@ export default async function Article({ params }: PageProps) {
 
   return (
     <>
+      <button>
+        <Link href="/articles">
+          <svg className="absolute top-28 left-56 text-white" xmlns="http://www.w3.org/2000/svg" height="56" viewBox="0 -960 960 960" width="56"><path fill="currentColor" d="m274-450 248 248-42 42-320-320 320-320 42 42-248 248h526v60H274Z"/></svg>
+        </Link>
+      </button>
       <section className="max-w-3xl mx-auto mt-24">
         <ArticleHeader
           title={currentArticle.title} 
