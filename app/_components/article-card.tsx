@@ -1,3 +1,5 @@
+"use client"
+
 type ArticleCardProps = {
   title: string
   author: string
@@ -21,16 +23,3 @@ export function ArticleCard({ title, author, imgSrc }: ArticleCardProps) {
     </div>
   )
 }
-
-
-{/* <div className="w-80 h-56 border border-black rounded-lg overflow-hidden shadow-xl">
-      <div className="flex flex-col h-full">
-        <div className="h-28 bg-white rounded">
-          
-        </div>
-        <div className="flex-grow bg-zinc-950 relative">
-        <span className="absolute text-white -top-3 bg-zinc-600 left-0 right-0 mx-12 rounded text-center">Teste de titulo</span>
-          teste
-        </div>
-      </div>
-    </div> */}
