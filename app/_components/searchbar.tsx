@@ -11,7 +11,7 @@ export function SearchBar() {
   
   const articlesBySearchTermsQuery = `
     query {
-      allContentArticles(filter: {title: {matches: {pattern: ${searchTerms}, caseSensitive: false}}}) {
+      allContentArticles(filter: {title: {matches: {pattern: "${searchTerms}", caseSensitive: false}}}) {
         id,
         title,
         author,
@@ -62,7 +62,10 @@ export function SearchBar() {
   }, [data])
 
   useEffect(() => {
-    refetch()
+    const debounce = setTimeout(() => {
+      refetch()
+    }, 500)
+    return () => clearTimeout(debounce)
   }, [searchTerms])
 
   return (
