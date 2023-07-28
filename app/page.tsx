@@ -1,5 +1,10 @@
+import { Metadata } from "next";
 import { CardText } from "./_components/card-text";
 import { SocialButton } from "./_components/social-button";
+
+export const metadata: Metadata = {
+  title: "Início"
+}
 
 export default function Home() {
   return (

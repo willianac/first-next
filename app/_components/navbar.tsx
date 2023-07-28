@@ -25,7 +25,7 @@ export default function Navbar() {
       <nav className="h-full">
         <ul className="flex font-medium text-white h-full">
           <li className="px-2 transition ease-linear hover:bg-indigo-700 flex items-center">
-            <Link href="/">Home</Link>
+            <Link href="/auth/login">Entrar</Link>
           </li>
           <li className="px-2 transition ease-linear hover:bg-indigo-700 flex items-center">
             <Link href="/articles" prefetch={false}>Artigos</Link>
