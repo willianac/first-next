@@ -1,9 +1,11 @@
+import Navbar from "../_components/navbar";
 import { ArticlesList } from "./_components/articles-list";
 import { ProfileCard } from "./_components/profile-card";
 
 export default function Profile() {
   return (
     <>
+      <Navbar />
       <main className="w-[1080px] mx-auto mt-24">
         <section>
           <ProfileCard />

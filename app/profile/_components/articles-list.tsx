@@ -5,7 +5,7 @@ import { ArticleCard } from "../../_components/article-card"
 import { useQuery } from "@tanstack/react-query"
 import { Article } from "../../../infra/cms/Article"
 
-const CMS_API_TOKEN = process.env.CMS_API_TOKEN
+const CMS_API_TOKEN = process.env.NEXT_PUBLIC_CMS_API_TOKEN
 
 const userArticlesQuery = `
   query {
@@ -20,7 +20,6 @@ const userArticlesQuery = `
 `
 
 export function ArticlesList() {
-  
   const { data, isError, isLoading } = useQuery({
     queryKey: ["user-articles"],
     queryFn: async() => {
