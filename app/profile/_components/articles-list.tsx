@@ -1,12 +1,11 @@
 "use client"
 
-import { useContext, useEffect } from "react"
-import { ArticleContext } from "../../../context/ArticlesContext"
+import { useEffect } from "react"
 import { ArticleCard } from "../../_components/article-card"
 import { useQuery } from "@tanstack/react-query"
 import { Article } from "../../../infra/cms/Article"
 
-const CMS_API_TOKEN = "abd41bfac327d226ebf2dab1ebf1bd"
+const CMS_API_TOKEN = process.env.CMS_API_TOKEN
 
 const userArticlesQuery = `
   query {
@@ -21,7 +20,6 @@ const userArticlesQuery = `
 `
 
 export function ArticlesList() {
-  const { articles } = useContext(ArticleContext)
   
   const { data, isError, isLoading } = useQuery({
     queryKey: ["user-articles"],

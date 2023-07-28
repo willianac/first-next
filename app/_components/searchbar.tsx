@@ -3,12 +3,11 @@ import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 import { ArticleContext } from "../../context/ArticlesContext";
 
-const CMS_API_TOKEN = "abd41bfac327d226ebf2dab1ebf1bd"
+const CMS_API_TOKEN = process.env.NEXT_PUBLIC_CMS_API_TOKEN
 
 export function SearchBar() {
   const [searchTerms, setSearchTerms] = useState("")
   const { updateArticlesList } = useContext(ArticleContext)
-  
   const articlesBySearchTermsQuery = `
     query {
       allContentArticles(filter: {title: {matches: {pattern: "${searchTerms}", caseSensitive: false}}}) {
