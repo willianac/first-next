@@ -1,8 +1,7 @@
 type QueryString = {
   query: string
 }
-
-const CMS_API_TOKEN = "abd41bfac327d226ebf2dab1ebf1bd"
+const CMS_API_TOKEN = process.env.NEXT_PUBLIC_CMS_API_TOKEN
 
 export async function cmsService({ query }: QueryString) {
   try {
