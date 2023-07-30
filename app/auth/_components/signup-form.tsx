@@ -1,10 +1,26 @@
-import Link from "next/link";
+"use client"
 
-export function SignUpForm() {
+import Link from "next/link";
+import { FormEvent, useState } from "react";
+
+type ComponentProps = {
+  submit: (user: any) => void
+}
+
+export function SignUpForm({ submit }: ComponentProps) {
+  const [name, setName] = useState("")
+  const [username, setUserName] = useState("")
+  const [password, setPassword] = useState("")
+
+  const onSubmit = (event: FormEvent) => {
+    event.preventDefault()
+    submit({name, username, password})
+  }
+
   return (
     <div className="bg-zinc-950 rounded-lg w-full max-w-lg p-10 shadow-zinc-950/50 shadow-lg flex flex-col">
       <h1 className="text-zinc-100 text-2xl font-semibold text-center">Crie uma conta agora</h1>
-      <form className="flex flex-col gap-3.5 w-full mt-10">
+      <form onSubmit={e => onSubmit(e)} className="flex flex-col gap-3.5 w-full mt-10">
         <div className="flex flex-col">
           <label htmlFor="name" className="text-zinc-300 font-semibold text-sm mb-1.5">Seu nome</label>
           <input
@@ -12,6 +28,8 @@ export function SignUpForm() {
             name="name" 
             id="name"
             className="h-11 bg-zinc-800 rounded-md px-3 outline-none font-sans text-zinc-100 outline focus:outline-indigo-700 transition-all"
+            value={name}
+            onChange={e => setName(e.target.value)}
           />
         </div>
         <div className="flex flex-col">
@@ -23,6 +41,8 @@ export function SignUpForm() {
               name="username" 
               id="username"
               className="h-11 bg-zinc-800 rounded-md pl-9 outline-none font-sans text-zinc-100 w-full outline focus:outline-indigo-700 transition-all"
+              value={username}
+              onChange={e => setUserName(e.target.value)}
             />
           </div>
         </div>
@@ -35,11 +55,13 @@ export function SignUpForm() {
               name="password"
               id="password"
               className="h-11 bg-zinc-800 rounded-md pl-9 outline-none font-sans text-zinc-100 w-full outline focus:outline-indigo-700 transition-all"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
             />
           </div>
         </div>
         <div className="mt-8">
-          <button className="bg-indigo-700 w-full h-11 rounded-md text-white font-bold hover:bg-indigo-800 transition">Entrar</button>
+          <button type="submit" className="bg-indigo-700 w-full h-11 rounded-md text-white font-bold hover:bg-indigo-800 transition">Entrar</button>
         </div>
       </form>
       <span className="text-white text-sm mt-5">

@@ -6,7 +6,16 @@ export const metadata: Metadata = {
 }
 
 export default function SignUp() {
+
+  const doSignUp = async (user: any) => {
+    "use server"
+    await fetch("http://localhost:3000/api/users/signup", {
+      method: "POST",
+      body: JSON.stringify(user)
+    })
+  }
+
   return (
-    <SignUpForm />
+    <SignUpForm submit={doSignUp}/>
   )
 }
