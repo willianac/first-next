@@ -3,7 +3,14 @@
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { FormEvent, useContext, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { UserContext } from "../../../context/UserContext";
+
+type SignUpResponse = {
+  success: boolean
+  user: string
+  code: string
+}
 
 export function SignUpForm() {
   const [name, setName] = useState("")
@@ -14,18 +21,41 @@ export function SignUpForm() {
 
   const { saveUser } = useContext(UserContext)
 
-  const onSubmit = async (event: FormEvent) => {
-    event.preventDefault()
-    const response = await fetch("http://localhost:3000/api/users/signup", {
-      method: "POST",
-      body: JSON.stringify({ name, username, password })
-    })
-    const data = await response.json()
-    const user = JSON.parse(data.user)
-    saveUser(user)
-    router.push("/articles")
+  const toastErrorStyle = {
+    style: {
+      borderRadius: '10px',
+      background: '#333',
+      color: '#fff',
+    },
   }
 
+  const onSubmit = async(event: FormEvent) => {
+    event.preventDefault()
+
+    try {
+      const response = await fetch("http://localhost:3000/api/users/signup", {
+        method: "POST",
+        body: JSON.stringify({ name, username, password })
+      })
+
+      if(!response.ok) {
+        throw response
+      }
+      
+      const data = await response.json() as SignUpResponse
+      const user = JSON.parse(data.user)
+      saveUser(user)
+      router.push("/articles")
+    } catch (error: any) {
+      if(error instanceof Response) {
+        if(error.status === 400) {
+          return toast.error("Usuário já existe", toastErrorStyle)
+        }
+        return toast.error("Erro inesperado")
+      }
+    }
+  }
+  
   return (
     <div className="bg-zinc-950 rounded-lg w-full max-w-lg p-10 shadow-zinc-950/50 shadow-lg flex flex-col">
       <h1 className="text-zinc-100 text-2xl font-semibold text-center">Crie uma conta agora</h1>
@@ -76,6 +106,7 @@ export function SignUpForm() {
       <span className="text-white text-sm mt-5">
         Já possui conta? <Link href="/auth/login" className="text-indigo-700 font-bold">Entrar</Link>
       </span>
+      <Toaster />
     </div>
   )
 }
