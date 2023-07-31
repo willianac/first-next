@@ -1,20 +1,29 @@
 "use client"
 
+import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
+import { UserContext } from "../../../context/UserContext";
 
-type ComponentProps = {
-  submit: (user: any) => void
-}
-
-export function SignUpForm({ submit }: ComponentProps) {
+export function SignUpForm() {
   const [name, setName] = useState("")
   const [username, setUserName] = useState("")
   const [password, setPassword] = useState("")
+  
+  const router = useRouter()
 
-  const onSubmit = (event: FormEvent) => {
+  const { saveUser } = useContext(UserContext)
+
+  const onSubmit = async (event: FormEvent) => {
     event.preventDefault()
-    submit({name, username, password})
+    const response = await fetch("http://localhost:3000/api/users/signup", {
+      method: "POST",
+      body: JSON.stringify({ name, username, password })
+    })
+    const data = await response.json()
+    const user = JSON.parse(data.user)
+    saveUser(user)
+    router.push("/articles")
   }
 
   return (
