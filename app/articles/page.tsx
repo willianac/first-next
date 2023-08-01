@@ -1,18 +1,49 @@
-"use client"
-
 import { Metadata } from "next";
 import { ArticleCard } from "../_components/article-card";
 import Link from "next/link";
-import { useContext } from "react";
-import { ArticleContext } from "../../context/ArticlesContext";
+import { Article } from "../../infra/cms/Article";
 
 export const metadata: Metadata = {
   title : "Artigos",
 }
 
-export default function Articles() {
-  const { articles } = useContext(ArticleContext)
-  
+const CMS_API_TOKEN = process.env.CMS_API_TOKEN
+
+async function getArticles() {
+  const allArticlesQuery = `
+    query {
+      allContentArticles {
+        title,
+        author,
+        headerImg {
+          url
+        },
+        id,
+        content {
+          value
+        }
+      }
+    }
+  `
+  const response = await fetch("https://graphql.datocms.com/", {
+    method: "POST",
+    headers: {
+      "Authorization": "Bearer " + CMS_API_TOKEN
+    },
+    body: JSON.stringify({ query: allArticlesQuery })
+  })
+
+  if(!response.ok) {
+    throw new Error("Não foi possível listar os artigos")
+  }
+
+  const data = await response.json()
+  return data.data.allContentArticles
+}
+
+export default async function Articles() {
+  const articles: Article[] = await getArticles()
+
   return (
     <>
       <main className="max-w-5xl mx-auto mt-24">

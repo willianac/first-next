@@ -1,5 +1,3 @@
-"use client"
-
 type ArticleCardProps = {
   title: string
   author: string
