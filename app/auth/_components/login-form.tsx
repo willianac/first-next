@@ -1,10 +1,56 @@
+"use client"
+
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { FormEvent, useContext, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import { User, UserContext } from "../../../context/UserContext";
+
+type LoginResponseData = {
+  success: boolean
+  user: string
+}
 
 export function LoginForm() {
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+
+  const { saveUser } = useContext(UserContext)
+  const router = useRouter()
+
+  const onSubmit = async(event: FormEvent) => {
+    event.preventDefault()
+
+    if(!username || !password) return toast("Preencha os campos")
+
+    try {
+      const response = await fetch("http://localhost:3000/api/users/login", {
+        method: "POST",
+        body: JSON.stringify({ username, password })
+      })
+
+      if(!response.ok) {
+        throw response
+      }
+
+      const data = await response.json() as LoginResponseData
+      const user = JSON.parse(data.user) as User
+      saveUser(user)
+      router.push("/articles")
+    } catch (error: unknown) {
+      if(error instanceof Response) {
+        if(error.status === 422) {
+          return toast.error("Usuário ou senha incorretos")
+        }
+      }
+      return toast.error("Erro inesperado")
+    }
+  }
+  
   return (
     <div className="bg-zinc-950 rounded-lg w-full max-w-lg p-10 h-[450px] shadow-zinc-950/50 shadow-lg flex flex-col">
       <h1 className="text-zinc-100 text-2xl font-semibold text-center">Bem vindo de volta</h1>
-      <form className="flex flex-col gap-3.5 w-full mt-10">
+      <form onSubmit={onSubmit} className="flex flex-col gap-3.5 w-full mt-10">
         <div className="flex flex-col">
           <label htmlFor="username" className="text-zinc-300 font-semibold text-sm mb-1.5">Nome de usuário</label>
           <div className="relative w-full">
@@ -14,6 +60,8 @@ export function LoginForm() {
               name="username" 
               id="username"
               className="h-11 bg-zinc-800 rounded-md pl-9 outline-none font-sans text-zinc-100 w-full outline focus:outline-indigo-700 transition-all"
+              value={username}
+              onChange={e => setUsername(e.target.value)}
             />
           </div>
         </div>
@@ -26,6 +74,8 @@ export function LoginForm() {
               name="password"
               id="password"
               className="h-11 bg-zinc-800 rounded-md pl-9 outline-none font-sans text-zinc-100 w-full outline focus:outline-indigo-700 transition-all"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
             />
           </div>
         </div>
@@ -36,6 +86,7 @@ export function LoginForm() {
       <span className="text-white text-sm mt-5">
         Ainda não tem uma conta? <Link href="/auth/signup" className="text-indigo-700 font-bold">Criar</Link>
       </span>
+      <Toaster />
     </div>
   )
 }

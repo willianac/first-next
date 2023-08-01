@@ -2,21 +2,26 @@
 
 import { createContext, useState } from "react";
 
+export type User = {
+  id: string
+  name: string
+}
+
 export const UserContext = createContext({
   user: {
     id: "",
     name: ""
   },
-  saveUser: (user: any) => {}
+  saveUser: (user: User) => {}
 })
 
 export default function UserProvider({ children }) {
-  const [user, setUser] = useState({
+  const [user, setUser] = useState<User>({
     id: "",
     name: ""
   })
 
-  function saveUser(user: any) {
+  function saveUser(user: User) {
     setUser(user)
   }
 
