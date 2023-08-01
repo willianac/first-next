@@ -4,9 +4,9 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { FormEvent, useContext, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { UserContext } from "../../../context/UserContext";
+import { User, UserContext } from "../../../context/UserContext";
 
-type SignUpResponse = {
+type SignUpResponseData = {
   success: boolean
   user: string
   code: string
@@ -21,16 +21,10 @@ export function SignUpForm() {
 
   const { saveUser } = useContext(UserContext)
 
-  const toastErrorStyle = {
-    style: {
-      borderRadius: '10px',
-      background: '#333',
-      color: '#fff',
-    },
-  }
-
   const onSubmit = async(event: FormEvent) => {
     event.preventDefault()
+
+    if(!name || !username || !password) return toast("Preencha os campos")
 
     try {
       const response = await fetch("http://localhost:3000/api/users/signup", {
@@ -42,17 +36,17 @@ export function SignUpForm() {
         throw response
       }
       
-      const data = await response.json() as SignUpResponse
-      const user = JSON.parse(data.user)
+      const data = await response.json() as SignUpResponseData
+      const user = JSON.parse(data.user) as User
       saveUser(user)
       router.push("/articles")
     } catch (error: any) {
       if(error instanceof Response) {
         if(error.status === 400) {
-          return toast.error("Usuário já existe", toastErrorStyle)
+          return toast.error("Usuário já existe")
         }
-        return toast.error("Erro inesperado")
       }
+      return toast.error("Erro inesperado")
     }
   }
   
