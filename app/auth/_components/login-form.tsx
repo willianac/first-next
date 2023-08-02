@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FormEvent, useContext, useState } from "react";
+import { FormEvent, MutableRefObject, useContext, useRef, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { User, UserContext } from "../../../context/UserContext";
 
@@ -47,6 +47,14 @@ export function LoginForm() {
       return toast.error("Erro inesperado")
     }
   }
+
+  const passwordInput: MutableRefObject<HTMLInputElement> = useRef(null)
+  const handlePassInputVisibility = () => {
+    const currentType = passwordInput.current.type
+    currentType === "password" 
+      ? passwordInput.current.type = "text" 
+      : passwordInput.current.type = "password"
+  }
   
   return (
     <div className="bg-zinc-950 rounded-lg w-full max-w-lg p-10 h-[450px] shadow-zinc-950/50 shadow-lg flex flex-col">
@@ -74,10 +82,12 @@ export function LoginForm() {
               type="password" 
               name="password"
               id="password"
-              className="h-11 bg-zinc-800 rounded-md pl-9 outline-none font-sans text-zinc-100 w-full outline focus:outline-indigo-700 transition-all"
+              className="h-11 bg-zinc-800 rounded-md px-9 outline-none font-sans text-zinc-100 w-full outline focus:outline-indigo-700 transition-all"
               value={password}
               onChange={e => setPassword(e.target.value)}
+              ref={passwordInput}
             />
+            <svg onClick={handlePassInputVisibility} className="absolute top-2.5 right-1.5 text-zinc-950 cursor-pointer hover:text-indigo-700 transition" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path fill="currentColor" d="M480.118-330Q551-330 600.5-379.618q49.5-49.617 49.5-120.5Q650-571 600.382-620.5q-49.617-49.5-120.5-49.5Q409-670 359.5-620.382q-49.5 49.617-49.5 120.5Q310-429 359.618-379.5q49.617 49.5 120.5 49.5Zm-.353-58Q433-388 400.5-420.735q-32.5-32.736-32.5-79.5Q368-547 400.735-579.5q32.736-32.5 79.5-32.5Q527-612 559.5-579.265q32.5 32.736 32.5 79.5Q592-453 559.265-420.5q-32.736 32.5-79.5 32.5ZM480-200q-146 0-264-83T40-500q58-134 176-217t264-83q146 0 264 83t176 217q-58 134-176 217t-264 83Z"/></svg>
           </div>
         </div>
         <div className="mt-8">
