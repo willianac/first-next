@@ -19,7 +19,9 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 w-full h-16 shadow-md flex justify-between items-center px-12 bg-black transition-all duration-500" id="navbar">
       <div className="flex items-center gap-x-48">
-        <h1 className="text-white font-semibold text-lg">My Blog</h1>
+        <Link href="/">
+          <h1 className="text-white font-semibold text-lg">Next-Blog</h1>
+        </Link>
         <SearchBar />
       </div>
       <nav className="h-full">

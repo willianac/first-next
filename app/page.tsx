@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { CardText } from "./_components/card-text";
 import { SocialButton } from "./_components/social-button";
+import { HomeNavbar } from "./_components/home-navbar";
 
 export const metadata: Metadata = {
   title: "Início"
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
+      <HomeNavbar />
       <header className="max-w-3xl mx-auto mt-24">
         <h1 
           className="font-extrabold text-center text-9xl text-zinc-100 tracking-tight hover:text-indigo-700 transition-colors animate-pulse"
