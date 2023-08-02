@@ -19,7 +19,7 @@ export function SignUpForm() {
   
   const router = useRouter()
 
-  const { saveUser } = useContext(UserContext)
+  const { saveUser, setIsUserAuthenticated } = useContext(UserContext)
 
   const onSubmit = async(event: FormEvent) => {
     event.preventDefault()
@@ -39,6 +39,7 @@ export function SignUpForm() {
       const data = await response.json() as SignUpResponseData
       const user = JSON.parse(data.user) as User
       saveUser(user)
+      setIsUserAuthenticated(true)
       router.push("/articles")
     } catch (error: any) {
       if(error instanceof Response) {

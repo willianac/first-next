@@ -15,7 +15,7 @@ export function LoginForm() {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
-  const { saveUser } = useContext(UserContext)
+  const { saveUser, setIsUserAuthenticated } = useContext(UserContext)
   const router = useRouter()
 
   const onSubmit = async(event: FormEvent) => {
@@ -36,6 +36,7 @@ export function LoginForm() {
       const data = await response.json() as LoginResponseData
       const user = JSON.parse(data.user) as User
       saveUser(user)
+      setIsUserAuthenticated(true)
       router.push("/articles")
     } catch (error: unknown) {
       if(error instanceof Response) {
