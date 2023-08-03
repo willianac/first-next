@@ -1,6 +1,7 @@
 "use client"
 
 import { createContext, useState } from "react";
+import { deleteCookie } from "cookies-next";
 
 export type User = {
   id: string
@@ -36,6 +37,7 @@ export default function UserProvider({ children }) {
   function logout() {
     setUser({id: "", name: ""})
     setIsUserAuthenticated(false)
+    deleteCookie("teste")
   }
   
 

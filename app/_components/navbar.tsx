@@ -1,13 +1,22 @@
 "use client"
+
 import Link from "next/link"
 import { useContext, useEffect, useState } from "react"
+import { getCookie } from "cookies-next"
 import { SearchBar } from "./searchbar"
 import { PopOverMenu } from "./popover-menu"
-import { UserContext } from "../../context/UserContext"
+import { User, UserContext } from "../../context/UserContext"
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const { isUserAuthenticated, user, logout } = useContext(UserContext)
+  const { 
+    isUserAuthenticated, 
+    user, 
+    logout,
+    setIsUserAuthenticated,
+    saveUser 
+  } = useContext(UserContext)
+
 
   const handlePopOver = () => {
     setIsMenuOpen(prevState => !prevState)
@@ -25,6 +34,16 @@ export default function Navbar() {
       prevScrollPos = currentScrollPos;
     }
   })
+
+
+  useEffect(() => {
+    const token = getCookie("x-access-token")
+    if(token) {
+      const user: User = JSON.parse(token.toString())
+      setIsUserAuthenticated(true)
+      saveUser(user)
+    }
+  }, [])
 
   return (
     <header className="fixed top-0 w-full h-16 shadow-md flex justify-between items-center px-12 bg-black transition-all duration-500" id="navbar">
