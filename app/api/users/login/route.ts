@@ -26,10 +26,14 @@ export async function POST(request: Request) {
     name: userExists.rows[0].name
   }
 
-  await dbClient.end()
-
-  return NextResponse.json({
+  const response = NextResponse.json({
     success: true,
     user: JSON.stringify(userResponse)
   })
+
+  const cookie = JSON.stringify(userResponse)
+  response.cookies.set("x-access-token", cookie)
+  
+  await dbClient.end()
+  return response
 }

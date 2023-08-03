@@ -30,6 +30,9 @@ export async function POST(request: Request) {
     status: 201
   })
 
+  const cookie = JSON.stringify(queryResponse.rows[0])
+  response.cookies.set("x-access-token", cookie)
+
   await dbClient.end()
   return response
 }
