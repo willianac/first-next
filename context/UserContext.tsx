@@ -6,12 +6,14 @@ import { deleteCookie } from "cookies-next";
 export type User = {
   id: string
   name: string
+  username: string
 }
 
 export const UserContext = createContext({
   user: {
     id: "",
-    name: ""
+    name: "",
+    username: ""
   },
   saveUser: (user: User) => {},
   isUserAuthenticated: false,
@@ -23,7 +25,8 @@ export default function UserProvider({ children }) {
   const [isUserAuthenticated, setUserAuthenticated] = useState(false)
   const [user, setUser] = useState<User>({
     id: "",
-    name: ""
+    name: "",
+    username: ""
   })
 
   function saveUser(user: User) {
@@ -35,9 +38,9 @@ export default function UserProvider({ children }) {
   }
 
   function logout() {
-    setUser({id: "", name: ""})
+    setUser({id: "", name: "", username: ""})
     setIsUserAuthenticated(false)
-    deleteCookie("teste")
+    deleteCookie("x-access-token")
   }
   
 

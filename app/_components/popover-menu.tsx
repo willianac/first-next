@@ -3,10 +3,11 @@ import { useRouter } from "next/navigation";
 
 type ComponentProps = {
   firstname: string
+  username: string
   logout: () => void
 }
 
-export function PopOverMenu({ firstname, logout }: ComponentProps) {
+export function PopOverMenu({ firstname, username, logout }: ComponentProps) {
   const router = useRouter()
   
   const handleLogout = () => {
@@ -18,7 +19,7 @@ export function PopOverMenu({ firstname, logout }: ComponentProps) {
     <div className="bg-zinc-950 w-64 h-64 rounded-lg py-2 relative shadow-black/40 shadow-lg">
       <div className="flex flex-col">
         <h1 className="text-zinc-100 ml-6 text-lg font-bold">{firstname}</h1>
-        <small className="text-zinc-200 text-xs ml-6 font-medium">@willianac</small>
+        <small className="text-zinc-200 text-xs ml-6 font-medium">{username}</small>
       </div>
       <ul className="gap-2 mt-5">
         <li className="py-1 hover:bg-slate-700 transition duration-200">
