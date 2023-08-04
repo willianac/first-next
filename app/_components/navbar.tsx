@@ -70,7 +70,7 @@ export default function Navbar() {
         </ul>
         {isMenuOpen &&
           <div className="absolute right-0">
-            <PopOverMenu firstname={user.name} logout={logout}/>
+            <PopOverMenu firstname={user.name} username={user.username} logout={logout}/>
           </div>
         }
       </nav>
