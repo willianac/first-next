@@ -7,5 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: testando github actions
-        run: echo Hello World
+
+      - name: Run installation
+        run: npm install
+      - name: Run tests
+        run: npm run test
