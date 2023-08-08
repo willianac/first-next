@@ -2,8 +2,11 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  CMS_API_TOKEN: ${{ secrets.CMS_API_TOKEN }}
+
 jobs:
-  first-job:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -12,3 +15,21 @@ jobs:
         run: npm install
       - name: Run tests
         run: npm run test
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Run installation
+        run: npm install
+
+      - name: Run build
+        run: npm run build
+
+      - name: Deploy to Netlify
+        uses: netlify/actions/cli@master
+        with:
+          args: deploy --dir=.next --functions=functions
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
