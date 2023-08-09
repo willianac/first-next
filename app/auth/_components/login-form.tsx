@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 import { FormEvent, MutableRefObject, useContext, useRef, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { User, UserContext } from "../../../context/UserContext";
+import { SignInWithButton } from "./sign-in-with-button";
+import { GoogleIcon } from "../../_components/icons/Google";
+import { GithubIcon } from "../../_components/icons/Github";
 
 type LoginResponseData = {
   success: boolean
@@ -57,7 +60,7 @@ export function LoginForm() {
   }
   
   return (
-    <div className="bg-zinc-950 rounded-lg w-full max-w-lg p-10 h-[450px] shadow-zinc-950/50 shadow-lg flex flex-col">
+    <div className="bg-zinc-950 rounded-lg w-full max-w-lg p-10 shadow-zinc-950/50 shadow-lg flex flex-col">
       <h1 className="text-zinc-100 text-2xl font-semibold text-center">Bem vindo de volta</h1>
       <form onSubmit={onSubmit} className="flex flex-col gap-3.5 w-full mt-10">
         <div className="flex flex-col">
@@ -97,6 +100,14 @@ export function LoginForm() {
       <span className="text-white text-sm mt-5">
         Ainda não tem uma conta? <Link href="/auth/signup" className="text-indigo-700 font-bold">Criar</Link>
       </span>
+      <div className="mt-12 flex flex-col gap-4">
+        <SignInWithButton backgroundColor="bg-white" bgColorHover="hover:bg-gray-300" Icon={GoogleIcon}>
+          Entrar com Google
+        </SignInWithButton>
+        <SignInWithButton backgroundColor="bg-black" color="text-white" bgColorHover="hover:bg-zinc-900" Icon={GithubIcon}>
+          Entrar com Github
+        </SignInWithButton>
+      </div>
       <Toaster />
     </div>
   )
