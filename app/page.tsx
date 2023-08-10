@@ -2,12 +2,16 @@ import { Metadata } from "next";
 import { CardText } from "./_components/card-text";
 import { SocialButton } from "./_components/social-button";
 import { HomeNavbar } from "./_components/home-navbar";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]/route";
 
 export const metadata: Metadata = {
   title: "Início"
 }
 
-export default function Home() {
+export default async function Home() {
+  const session = await getServerSession(authOptions)
+
   return (
     <>
       <HomeNavbar />

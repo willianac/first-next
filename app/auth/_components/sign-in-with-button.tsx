@@ -1,3 +1,5 @@
+import { signIn } from "next-auth/react"
+
 type ComponentProps = {
   children: React.ReactNode
   backgroundColor?: string
@@ -7,8 +9,13 @@ type ComponentProps = {
 }
 
 export function SignInWithButton({ children, backgroundColor, bgColorHover, color, Icon }: ComponentProps) {
+  function doSignIn() {
+    signIn("google")
+  }
+
   return (
     <button
+      onClick={doSignIn}
       className={`
       font-bold rounded-lg h-11 relative transition ${backgroundColor} ${color} 
       ${bgColorHover}`
