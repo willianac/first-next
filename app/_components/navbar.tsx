@@ -3,11 +3,14 @@
 import Link from "next/link"
 import { useContext, useEffect, useState } from "react"
 import { getCookie } from "cookies-next"
+import { useSession } from "next-auth/react"
 import { SearchBar } from "./searchbar"
 import { PopOverMenu } from "./popover-menu"
 import { User, UserContext } from "../../context/UserContext"
 
 export default function Navbar() {
+  const { data:session } = useSession()
+
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { 
     isUserAuthenticated, 
@@ -16,7 +19,6 @@ export default function Navbar() {
     setIsUserAuthenticated,
     saveUser 
   } = useContext(UserContext)
-
 
   const handlePopOver = () => {
     setIsMenuOpen(prevState => !prevState)
@@ -38,12 +40,19 @@ export default function Navbar() {
 
   useEffect(() => {
     const token = getCookie("x-access-token")
+
     if(token) {
       const user: User = JSON.parse(token.toString())
       setIsUserAuthenticated(true)
       saveUser(user)
     }
-  }, [])
+
+    if(session) {
+      const user: User = {name: session.user.name}
+      setIsUserAuthenticated(true)
+      saveUser(user)
+    }
+  }, [session])
 
   return (
     <header className="fixed top-0 w-full h-16 shadow-md flex justify-between items-center px-12 bg-black transition-all duration-500" id="navbar">

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 
 type ComponentProps = {
   firstname: string
@@ -12,6 +13,7 @@ export function PopOverMenu({ firstname, username, logout }: ComponentProps) {
   
   const handleLogout = () => {
     logout()
+    signOut()
     router.push("/")
   }  
 

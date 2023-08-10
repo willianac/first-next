@@ -4,16 +4,24 @@ import { createContext, useState } from "react";
 import { deleteCookie } from "cookies-next";
 
 export type User = {
-  id: string
+  id?: string
   name: string
-  username: string
+  username?: string
 }
 
-export const UserContext = createContext({
+type UserContextType = {
+  user: User
+  saveUser: (user: User) => void
+  isUserAuthenticated: boolean
+  setIsUserAuthenticated: (value: boolean) => void
+  logout: () => void
+}
+
+export const UserContext = createContext<UserContextType>({
   user: {
+    username: "",
     id: "",
-    name: "",
-    username: ""
+    name: ""
   },
   saveUser: (user: User) => {},
   isUserAuthenticated: false,
