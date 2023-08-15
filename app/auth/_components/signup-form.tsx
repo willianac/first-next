@@ -5,6 +5,7 @@ import Link from "next/link";
 import { FormEvent, MutableRefObject, useContext, useRef, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { User, UserContext } from "../../../context/UserContext";
+import { ArrowBack } from "../../_components/icons/ArrowBack";
 
 type SignUpResponseData = {
   success: boolean
@@ -60,8 +61,11 @@ export function SignUpForm() {
   }
 
   return (
-    <div className="bg-zinc-950 rounded-lg w-full max-w-lg p-10 shadow-zinc-950/50 shadow-lg flex flex-col">
-      <h1 className="text-zinc-100 text-2xl font-semibold text-center">Crie uma conta agora</h1>
+    <div className="bg-zinc-950 w-full max-w-lg p-10 shadow-zinc-950/50 shadow-lg flex flex-col h-screen relative lg:h-auto lg:rounded-lg">
+      <div onClick={() => router.back()} className="block w-10 absolute top-3 left-3 lg:hidden">
+        <ArrowBack />
+      </div>
+      <h1 className="text-zinc-100 text-2xl font-bold lg:font-semibold text-center mt-5 lg:mt-0">Crie uma conta agora</h1>
       <form onSubmit={e => onSubmit(e)} className="flex flex-col gap-3.5 w-full mt-10">
         <div className="flex flex-col">
           <label htmlFor="name" className="text-zinc-300 font-semibold text-sm mb-1.5">Seu nome</label>
