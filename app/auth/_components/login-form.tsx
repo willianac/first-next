@@ -8,6 +8,7 @@ import { User, UserContext } from "../../../context/UserContext";
 import { SignInWithButton } from "./sign-in-with-button";
 import { GoogleIcon } from "../../_components/icons/Google";
 import { GithubIcon } from "../../_components/icons/Github";
+import { ArrowBack } from "../../_components/icons/ArrowBack";
 
 type LoginResponseData = {
   success: boolean
@@ -60,8 +61,11 @@ export function LoginForm() {
   }
   
   return (
-    <div className="bg-zinc-950 rounded-lg w-full max-w-lg p-10 shadow-zinc-950/50 shadow-lg flex flex-col">
-      <h1 className="text-zinc-100 text-2xl font-semibold text-center">Bem vindo de volta</h1>
+    <div className="bg-zinc-950 w-full max-w-lg p-10 shadow-zinc-950/50 shadow-lg flex flex-col h-screen relative lg:h-auto lg:rounded-lg">
+      <div onClick={() => router.back()} className="block absolute w-10 left-3 top-3 lg:hidden">
+        <ArrowBack />
+      </div>
+      <h1 className="text-zinc-100 text-2xl font-bold  lg:font-semibold text-center mt-5 lg:mt-0">Bem vindo de volta</h1>
       <form onSubmit={onSubmit} className="flex flex-col gap-3.5 w-full mt-10">
         <div className="flex flex-col">
           <label htmlFor="username" className="text-zinc-300 font-semibold text-sm mb-1.5">Nome de usuário</label>
